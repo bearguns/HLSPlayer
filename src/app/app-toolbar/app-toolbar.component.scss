@@ -1,0 +1,22 @@
+.play-icon {
+  display: block;
+  width: 48px;
+  height: 48px;
+  background: #CF3563;
+  border: none;
+  border-radius: 100%;
+  cursor: pointer;
+  position: absolute;
+
+  &:after {
+    content: '';
+    display: inline-block;
+    position: relative;
+    top: 11px;
+    left: 16px;
+    border-style: solid;
+    border-width: 10px 0 10px 20px;
+    border-color: transparent transparent transparent #f3f3f3;
+  }
+
+}

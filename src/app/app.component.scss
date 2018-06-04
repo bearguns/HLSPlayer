@@ -1,0 +1,15 @@
+.content {
+  margin: 0 auto;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 75vh;
+  width: 95%;
+
+  @media screen and (min-width: 960px) {
+    max-width: 1060px;
+  }
+
+}
