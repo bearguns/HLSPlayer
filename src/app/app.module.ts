@@ -10,6 +10,7 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
 import { StreamListComponent } from './stream-list/stream-list.component';
 import { VideoComponent } from './video-player/video/video.component';
 import { StreamListProviderService } from './stream-list-provider.service';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { StreamListProviderService } from './stream-list-provider.service';
     AppToolbarComponent,
     VideoPlayerComponent,
     StreamListComponent,
-    VideoComponent
+    VideoComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

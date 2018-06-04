@@ -1,0 +1,12 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+
+  .footer-legal {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+  }
+}
