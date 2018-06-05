@@ -11,7 +11,6 @@ import { StreamListComponent } from './stream-list/stream-list.component';
 import { VideoComponent } from './video-player/video/video.component';
 import { StreamListProviderService } from './stream-list-provider.service';
 import { FooterComponent } from './footer/footer.component';
-import { ControlsComponent } from './video-player/controls/controls.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import { ControlsComponent } from './video-player/controls/controls.component';
     VideoPlayerComponent,
     StreamListComponent,
     VideoComponent,
-    FooterComponent,
-    ControlsComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,
