@@ -1,8 +1,8 @@
-<div id="app-content">
+<div id="app-content" >
   <app-toolbar></app-toolbar>
   <div class="content">
-    <video-player></video-player>
-    <stream-list></stream-list>
+    <video-player [nowPlaying]="nowPlaying"></video-player>
+    <stream-list (userSelectedStream)="updateNowPlaying($event)"></stream-list>
   </div>
   <app-footer></app-footer>
 </div>

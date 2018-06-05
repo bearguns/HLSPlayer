@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Video } from '../models/video.model';
 import { StreamListProviderService } from '../stream-list-provider.service';
 
@@ -7,16 +7,18 @@ import { StreamListProviderService } from '../stream-list-provider.service';
   templateUrl: './stream-list.component.html',
   styleUrls: ['./stream-list.component.scss']
 })
-export class StreamListComponent implements OnInit {
+export class StreamListComponent {
 
-  selectedStream: Video;
   streams: Video[];
+  streamListService: any;
+  @Output() userSelectedStream: EventEmitter<Video> = new EventEmitter();
 
   constructor(streamListService: StreamListProviderService) {
     this.streams = streamListService.getStreams();
   }
 
-  ngOnInit() {
+  setSelectedStream(stream: Video) {
+    console.log(stream);
+    this.userSelectedStream.emit(stream);
   }
-
 }

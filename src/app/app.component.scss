@@ -2,14 +2,20 @@
   margin: 0 auto;
   margin-top: 24px;
   display: flex;
+  width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  height: 75vh;
-  width: 95%;
+  padding: 4px 16px;
 
   @media screen and (min-width: 960px) {
-    max-width: 1060px;
+    max-width: 1172px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
   }
 
 }

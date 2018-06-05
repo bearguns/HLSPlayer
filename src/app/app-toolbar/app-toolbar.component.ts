@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
     <header class="header">
       <mat-toolbar>
         <span class="play-icon"></span>
+        <span class="spacer"></span>
+        <h1>HLS Player</h1>
       </mat-toolbar>
     </header>
   `,

@@ -1,13 +1,19 @@
-.video-player {
 
-  .card {
-    padding: 0;
+.video-player-container {
+  width: 720px;
+
+  content {
+    .stream-author-information {
+      font-size: 1.45em;
+      line-height: 1.45em;
+
+      h2 {
+        span {
+          vertical-align: middle;
+        }
+      }
+    }
   }
-
-  @media screen and (min-width: 768px) {
-    max-width: 720px;
-  }
-
   @media screen and (max-width: 768px) {
     width: 100vw;
   }

@@ -1,5 +1,14 @@
+.header {
+  mat-toolbar {
+    display: flex;
+
+    .spacer {
+      flex: 1 1;
+    }
+  }
+}
 .play-icon {
-  display: block;
+  display: inline-block;
   width: 48px;
   height: 48px;
   background: #CF3563;

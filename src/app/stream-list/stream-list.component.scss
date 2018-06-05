@@ -1,4 +1,21 @@
-.stream-list {
+.stream-list-container {
+  display: flex;
+  border-left: 1px #fefefe;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+
+  mat-list {
+    text-align: center;
+    width: 100%;
+
+    mat-list-item {
+      button {
+        width: 100%;
+        text-align: left;
+      }
+    }
+  }
 
   @media screen and (max-width: 768px) {
     margin: 0 auto;

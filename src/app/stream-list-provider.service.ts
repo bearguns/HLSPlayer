@@ -16,5 +16,4 @@ export class StreamListProviderService {
     return this.streamList;
   }
 
-  constructor() { }
 }

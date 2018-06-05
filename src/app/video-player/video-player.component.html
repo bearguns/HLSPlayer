@@ -1,19 +1,14 @@
-<div class="video-player">
-  <mat-card>
-    <mat-card-content>
-      <video-player-video></video-player-video>
-      <mat-divider></mat-divider>
-    </mat-card-content>
-    <mat-card-title>Big Buck Bunny</mat-card-title>
-    <mat-card-subtitle>
-      <p>
-        <i class="material-icons">person</i>
-        <span>xStrimmer18x</span>
-      </p>
-    </mat-card-subtitle>
-    <mat-card-content>
-      sdflkjsdfoijsdfoghfdklgdfhlkfjgsdhilfdushgisdfuhgwekejhwioehujidfshgkdfshgdfkskhgdsfkgsdfjghirouewfowaeo
-    </mat-card-content>
-    <mat-card-actions align="end">Do Stuff</mat-card-actions>
-  </mat-card>
+<div class="video-player-container">
+  <video-player-video [nowPlaying]="nowPlaying"></video-player-video>
+  <div class="content">
+    <h1 class="mat-title"> {{ nowPlaying.title }}</h1>
+    <h2 class="mat-subheading-1 stream-author-information">
+      <i class="material-icons">person</i>
+      <span>{{ nowPlaying.author }}</span>
+    </h2>
+    <p class="mat-body-1">
+      {{ nowPlaying.description }}
+    </p>
+  </div>
+  <mat-divider></mat-divider>
 </div>
