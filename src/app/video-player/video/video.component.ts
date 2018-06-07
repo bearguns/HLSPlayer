@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import * as HLS from 'hls.js';
 import { Video } from '../../models/video.model';
 import { PlayerStatus } from '../../shared/player-model';
@@ -11,7 +11,7 @@ import { PlayerStatus } from '../../shared/player-model';
 export class VideoComponent implements OnInit {
 
   @Input() nowPlaying: Video;
-  @ViewChild('video') video: HTMLVideoElement;
+  @ViewChild('video') video;
 
   hls: any;
   streamSrc: string;
