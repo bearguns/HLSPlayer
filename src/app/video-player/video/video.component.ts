@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import * as HLS from 'hls.js';
 import { Video } from '../../models/video.model';
+import { PlayerStatus } from '../../shared/player-model';
 
 @Component({
   selector: 'video-player-video',
@@ -10,30 +11,51 @@ import { Video } from '../../models/video.model';
 export class VideoComponent implements OnInit {
 
   @Input() nowPlaying: Video;
+  @ViewChild('video') video: HTMLVideoElement;
 
   hls: any;
-  el: any; // Casting this as an HTMLVideoElement causes compiler warnings
-  metadata: any;
+  streamSrc: string;
+  firstLevel: any;
+  defaultHeight: number;
+  playerStatus: PlayerStatus;
 
   playCurrentStreamInPlayer() {
-    if (HLS.isSupported()) {
+    if (HLS.isSupported() && this.hls) {
       this.hls.loadSource(this.nowPlaying.streamSrc);
-      this.hls.attachMedia(this.el);
+      this.hls.attachMedia(this.video);
 
       this.hls.on(HLS.Events.MANIFEST_PARSED, (event, data) => {
-        this.el.play();
+        this.play();
       });
-
-      this.hls.on(HLS.Events.FRAG_PARSED, (event, data) => {
-        console.log(data);
-      })
     }
   }
 
+  play(): void {
+    this.playerStatus = PlayerStatus.PLAYING;
+    this.video.play();
+  }
+
+  pause(): void {
+    this.playerStatus = PlayerStatus.PAUSED;
+    this.video.pause();
+  }
+
+  userClickedVideo(): void {
+    switch (this.playerStatus) {
+      case PlayerStatus.PLAYING:
+        this.pause();
+        break;
+      case PlayerStatus.PAUSED:
+      this.play();
+      break;
+    }
+  }
+
+  constructor() {}
+
   ngOnInit() {
     this.hls = new HLS();
-    this.el = document.getElementById('hls-content');
-
+    this.video = this.video.nativeElement;
     this.playCurrentStreamInPlayer();
   }
 
