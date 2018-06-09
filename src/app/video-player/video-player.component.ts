@@ -1,7 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { EventEmitter } from 'protractor';
-import { Video } from '../models/video.model';
+import { Component } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
+interface ComponentState {
+  selectedStream: {
+    title: string,
+    src:   string
+  }
+}
 @Component({
   selector: 'video-player',
   templateUrl: './video-player.component.html',
@@ -9,7 +15,10 @@ import { Video } from '../models/video.model';
 })
 export class VideoPlayerComponent {
 
-  @Input()
-  nowPlaying: Video;
+  selectedStream$: Observable<any>;
+
+  constructor(private store: Store<ComponentState>) {
+    this.selectedStream$ = this.store.select('selectedStream');
+  }
 
 }

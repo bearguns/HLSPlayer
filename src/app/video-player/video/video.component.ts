@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import * as HLS from 'hls.js';
-import { Video } from '../../models/video.model';
 import { PlayerStatus } from '../../shared/player-model';
 
 @Component({
@@ -10,18 +9,17 @@ import { PlayerStatus } from '../../shared/player-model';
 })
 export class VideoComponent implements OnInit {
 
-  @Input() nowPlaying: Video;
+  @Input() nowPlaying: any;
   @ViewChild('video') video;
 
   hls: any;
-  streamSrc: string;
   firstLevel: any;
   defaultHeight: number;
   playerStatus: PlayerStatus;
 
   playCurrentStreamInPlayer() {
     if (HLS.isSupported() && this.hls) {
-      this.hls.loadSource(this.nowPlaying.streamSrc);
+      this.hls.loadSource(this.nowPlaying.src);
       this.hls.attachMedia(this.video);
 
       this.hls.on(HLS.Events.MANIFEST_PARSED, (event, data) => {

@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialDesignComponentsModule } from './materialdesigncomponentsmodule/material-design-components.module';
@@ -9,8 +11,8 @@ import { AppToolbarComponent } from './app-toolbar/app-toolbar.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { StreamListComponent } from './stream-list/stream-list.component';
 import { VideoComponent } from './video-player/video/video.component';
-import { StreamListProviderService } from './stream-list-provider.service';
 import { FooterComponent } from './footer/footer.component';
+import { reducers } from './shared/stores/stores.index';
 
 @NgModule({
   declarations: [
@@ -24,9 +26,12 @@ import { FooterComponent } from './footer/footer.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialDesignComponentsModule
+    MaterialDesignComponentsModule,
+    StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 10
+    })
   ],
-  providers: [StreamListProviderService],
   bootstrap: [AppComponent]
 })
 export class HLSPlayerAppModule { }

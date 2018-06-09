@@ -1,24 +1,32 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Video } from '../models/video.model';
-import { StreamListProviderService } from '../stream-list-provider.service';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { StreamsService } from '../shared/services/streams.service';
+
+interface ComponentState {
+  streams: any;
+}
 
 @Component({
   selector: 'stream-list',
   templateUrl: './stream-list.component.html',
   styleUrls: ['./stream-list.component.scss']
 })
+
 export class StreamListComponent {
 
-  streams: Video[];
-  streamListService: any;
-  @Output() userSelectedStream: EventEmitter<Video> = new EventEmitter();
+  streams$: Observable<any>;
 
-  constructor(streamListService: StreamListProviderService) {
-    this.streams = streamListService.getStreams();
+  constructor(private store: Store<ComponentState>, private streamsService: StreamsService) {
+    this.streams$ = this.store.select('streams');
   }
 
-  setSelectedStream(stream: Video) {
-    console.log(stream);
-    this.userSelectedStream.emit(stream);
+  ngOnInit() {
+    this.streamsService.setStreams();
   }
+
+  setSelectedStream(stream: any) {
+    this.streamsService.setSelectedStream(stream);
+  }
+
 }
