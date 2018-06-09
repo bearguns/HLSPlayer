@@ -10,9 +10,9 @@ import { AppComponent } from './app.component';
 import { AppToolbarComponent } from './app-toolbar/app-toolbar.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { StreamListComponent } from './stream-list/stream-list.component';
-import { VideoComponent } from './video-player/video/video.component';
 import { FooterComponent } from './footer/footer.component';
 import { reducers } from './shared/stores/stores.index';
+import { VideoDirective } from './shared/directives/video.directive';
 
 @NgModule({
   declarations: [
@@ -20,8 +20,8 @@ import { reducers } from './shared/stores/stores.index';
     AppToolbarComponent,
     VideoPlayerComponent,
     StreamListComponent,
-    VideoComponent,
-    FooterComponent
+    FooterComponent,
+    VideoDirective
   ],
   imports: [
     BrowserModule,

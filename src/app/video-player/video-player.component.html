@@ -1,6 +1,6 @@
 <div class="video-player-container" *ngIf="selectedStream$ | async">
-  <video-player-video [nowPlaying]="selectedStream$ | async"></video-player-video>
   <div class="content">
+    <div appVideo></div>
     <h1 class="mat-title"> {{ selectedStream$.title }}</h1>
   </div>
   <mat-divider></mat-divider>
