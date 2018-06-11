@@ -1,7 +1,10 @@
 <div class="video-player-container" *ngIf="selectedStream$ | async">
   <div class="content">
-    <div appVideo></div>
+    <div>
+      <video appVideoPlayer></video>
+    </div>
     <h1 class="mat-title"> {{ selectedStream$.title }}</h1>
   </div>
+  <app-video-controls></app-video-controls>
   <mat-divider></mat-divider>
 </div>

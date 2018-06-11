@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AppState } from '../shared/store/app.state';
+import { Stream } from '../shared/store/models/stream';
 
-interface ComponentState {
-  selectedStream: {
-    title: string,
-    src:   string
-  }
-}
 @Component({
   selector: 'video-player',
   templateUrl: './video-player.component.html',
@@ -15,9 +11,10 @@ interface ComponentState {
 })
 export class VideoPlayerComponent {
 
-  selectedStream$: Observable<any>;
+  selectedStream$: Observable<Stream>;
+  streamSubscription: Subscription;
 
-  constructor(private store: Store<ComponentState>) {
+  constructor(private store: Store<AppState>) {
     this.selectedStream$ = this.store.select('selectedStream');
   }
 

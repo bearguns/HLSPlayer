@@ -1,71 +1,72 @@
-import { Directive, ElementRef, OnInit } from '@angular/core';
+import { Directive, ElementRef } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import * as HLS from 'hls.js';
-
-interface Stream {
-  title: string,
-  src: string
-}
+import { VideoPlayer, VideoPlayerStatus } from '../store/models/video-player';
+import { AppState } from '../store/app.state';
+import * as VideoPlayerActions from '../store/actions/video-player.actions';
+import { map } from 'rxjs/operators';
+import { Stream } from '../store/models/stream';
 
 @Directive({
-  selector: '[appVideo]'
+  selector: '[appVideoPlayer]'
 })
-export class VideoDirective implements OnInit {
+export class VideoPlayerDirective {
 
-  private streamSubscription: Subscription;
-
-  stream: Stream;
-  selectedStream$: Observable<Stream>;
+  private element: HTMLVideoElement;
   hls: any;
-  h2Element: HTMLElement;
-  videoElement: HTMLVideoElement;
-  el: ElementRef;
+  videoPlayer: Observable<VideoPlayer>;
+  videoPlayerSubscription: Subscription;
+  stream: Observable<Stream>;
+  streamSubscription: Subscription;
 
-  constructor(el: ElementRef, private _store: Store<Stream>) {
-    this.hls = new HLS();
-    this.h2Element = document.createElement('h2');
-    this.h2Element.classList.add('mat-h2');
-    this.videoElement = document.createElement('video');
-    this.videoElement.classList.add('video-player-video');
-    this.videoElement.style.width = '720px';
-    this.selectedStream$ = this._store.select('selectedStream');
-    this.el = el;
+  constructor(private store: Store<AppState>, el: ElementRef) {
+    this.element = el.nativeElement;
+    this.hls = new HLS({
+      startLevel: 2,
+      capLevelToPlayerSize: true,
+
+    });
   }
 
   ngOnInit() {
-    this.el.nativeElement.style.minHeight = '280px';
-    this.streamSubscription = this.selectedStream$.subscribe(stream => {
-      this.updateVideoPlayer(stream);
-    });
+    this.videoPlayer = this.store.select('videoPlayer');
+    this.stream = this.store.select('selectedStream');
+
+    this.streamSubscription = this.stream.subscribe(
+      (data: Stream) => { this.establishHlsStream(data) },
+      err => console.error(err),
+      () => console.log('stream set and fetched')
+    )
+
+    this.videoPlayerSubscription = this.videoPlayer.subscribe(
+      (data: VideoPlayer) => this.setPlayback(data.status)
+    )
   }
 
-  updateVideoPlayer(stream: Stream): void {
-    console.log(stream);
-    if (!stream.title) return null;
-    this.h2Element.innerText = `Now Playing: ${stream.title}`;
-    this.el.nativeElement.appendChild(this.h2Element);
-
-
-    this.videoElement.addEventListener('click', () => {
-      this.videoElement.paused ? this.playVideo() : this.pauseVideo();
-    });
-
-    if (HLS.isSupported) {
-      this.el.nativeElement.appendChild(this.videoElement);
-      this.hls.loadSource(stream.src);
-      this.hls.attachMedia(this.videoElement);
-      this.hls.on(HLS.Events.MANIFEST_PARSED, () => {
-        this.playVideo();
-      });
+  setPlayback(status: VideoPlayerStatus) {
+    switch(status) {
+      case VideoPlayerStatus.PLAYING:
+        this.element.play();
+        break;
+      case VideoPlayerStatus.PAUSED:
+        this.element.pause();
     }
   }
 
-  playVideo(): void {
-    this.videoElement.play();
+  establishHlsStream(stream: Stream): void {
+    console.log(stream);
+    this.hls.detachMedia();
+    if (HLS.isSupported()) {
+      this.hls.attachMedia(this.element);
+      this.hls.on(HLS.Events.MEDIA_ATTACHED, () => {
+        this.hls.loadSource(stream.src);
+        this.hls.on(HLS.Events.MANIFEST_PARSED, (event, data) => {
+          this.store.dispatch(new VideoPlayerActions.SetAvailableLevels(data.levels));
+          this.hls.off(HLS.Events.LEVEL_LOADED)
+        });
+      })
+    }
   }
 
-  pauseVideo(): void {
-    this.videoElement.pause();
-  }
 }
