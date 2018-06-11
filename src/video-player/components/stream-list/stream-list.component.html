@@ -1,0 +1,12 @@
+<div class="stream-list-container">
+  <p class="mat-title">Available Streams: </p>
+      <mat-list>
+      <mat-list-item *ngFor="let stream of streams">
+        <button mat-button (click)="setSelectedStream(stream)">
+          <i class="material-icons">play_arrow</i>
+          {{ stream.title }}
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+</div>
