@@ -1,11 +1,11 @@
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { StreamsService } from '../shared/services/streams.service';
 
-interface ComponentState {
-  streams: any;
-}
+import { AppState } from '../shared/store/app.state';
+import * as StreamsActions from '../shared/store/actions/streams.actions';
+import * as SelectedStreamActions from '../shared/store/actions/selected-stream.actions';
+import { Stream } from '../shared/store/models/stream';
 
 @Component({
   selector: 'stream-list',
@@ -17,16 +17,17 @@ export class StreamListComponent {
 
   streams$: Observable<any>;
 
-  constructor(private store: Store<ComponentState>, private streamsService: StreamsService) {
+  constructor(private store: Store<AppState>) {
     this.streams$ = this.store.select('streams');
   }
 
   ngOnInit() {
-    this.streamsService.setStreams();
+    this.store.dispatch(new StreamsActions.FetchStreams());
   }
 
-  setSelectedStream(stream: any) {
-    this.streamsService.setSelectedStream(stream);
+  setSelectedStream(stream: Stream) {
+    console.log('setting stream', stream)
+    this.store.dispatch(new SelectedStreamActions.SetSelectedStream(stream));
   }
 
 }
