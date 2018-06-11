@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { Stream } from '../models/stream';
 import * as StreamActions from '../actions/stream.actions';
 
-const streams: Stream[] = [
+const streams: Stream[] = [ // just pretending that we are loading data from an API in this effect.
     {
       title: 'Sintel',
       src: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8'
