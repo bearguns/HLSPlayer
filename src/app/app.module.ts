@@ -1,40 +1,30 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { EffectsModule } from '@ngrx/effects';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule }            from '@angular/platform-browser';
+import { NgModule }                 from '@angular/core';
+import { StoreModule }              from '@ngrx/store';
+import { StoreDevtoolsModule }      from '@ngrx/store-devtools';
+import { EffectsModule }            from '@ngrx/effects';
+import { BrowserAnimationsModule }  from '@angular/platform-browser/animations';
 
-import { MaterialDesignComponentsModule } from './shared/modules/materialdesigncomponentsmodule/material-design-components.module';
-import { VideoControlsModule } from './shared/modules/video-controls/video-controls.module';
+import { NgMaterialModule } from '../ng-material/ng-material.module';
+import { VideoPlayerModule } from '../video-player/video-player.module';
 
 import { AppComponent } from './app.component';
-import { AppToolbarComponent } from './app-toolbar/app-toolbar.component';
-import { VideoPlayerComponent } from './video-player/video-player.component';
-import { StreamListComponent } from './stream-list/stream-list.component';
-import { FooterComponent } from './footer/footer.component';
-import { reducers } from './shared/store/store.reducers';
-import { VideoPlayerDirective } from './shared/directives/video.directive';
-import { VideoControlsComponent } from './video-controls/video-controls.component';
-import { StreamsEffects } from './shared/store/effects/streams.effects';
+import { AppToolbarComponent } from './components/app-toolbar/app-toolbar.component';
+import { AppFooterComponent } from './components/app-footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppToolbarComponent,
-    VideoPlayerComponent,
-    StreamListComponent,
-    FooterComponent,
-    VideoPlayerDirective,
-    VideoControlsComponent
+    AppFooterComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialDesignComponentsModule,
-    VideoControlsModule,
-    EffectsModule.forRoot([StreamsEffects]),
-    StoreModule.forRoot(reducers),
+    NgMaterialModule,
+    VideoPlayerModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       maxAge: 10
     })

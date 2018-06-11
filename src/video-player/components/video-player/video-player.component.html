@@ -1,0 +1,10 @@
+<div class="video-player-container" *ngIf="stream">
+  <div class="content">
+    <div>
+      <video appVideoPlayer></video>
+    </div>
+    <h1 class="mat-title"> {{ stream.title }}</h1>
+    <video-control-panel></video-control-panel>
+  </div>
+  <mat-divider></mat-divider>
+</div>
